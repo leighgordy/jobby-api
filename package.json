@@ -1,0 +1,19 @@
+{
+  "name": "jobby-api",
+  "version": "1.0.0",
+  "description": "fetch client which allows access to jobby-rest restful service",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leighgordy/jobby-api.git"
+  },
+  "author": "leighgordy@gmail.com",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/leighgordy/jobby-api/issues"
+  },
+  "homepage": "https://github.com/leighgordy/jobby-api#readme"
+}
