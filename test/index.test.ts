@@ -125,6 +125,64 @@ describe('index.test.ts', () => {
       }
     });
   });
+  describe('deleteJob', () => {
+    test('successful call', async ()=>{
+      const successPayload = { message: 'job deleted' };
+      // @ts-ignore
+      fetch.mockResponseOnce(JSON.stringify(successPayload));
+      const message:Message = await api.deleteJob(1);
+      // @ts-ignore
+      expect(fetch.mock.calls.length).toEqual(1);
+      // @ts-ignore
+      expect(fetch.mock.calls[0][0]).toEqual('http://localhost/api/jobs/1');
+      // @ts-ignore
+      expect(fetch.mock.calls[0][1]).toStrictEqual({
+        ...requestInit,
+        method: 'DELETE',
+      });
+      expect(message).toStrictEqual(successPayload);
+    });
+    test('failed call - 500', async (done)=>{
+      try {
+        // @ts-ignore
+        fetch.mockResponseOnce(JSON.stringify(failedPayload), {status: 500});
+        await api.deleteJob(1);
+        done.fail();
+      } catch(error) {
+        // @ts-ignore
+        expect(fetch.mock.calls.length).toEqual(1);
+        // @ts-ignore
+        expect(fetch.mock.calls[0][0]).toEqual('http://localhost/api/jobs/1');
+        // @ts-ignore
+        expect(fetch.mock.calls[0][1]).toStrictEqual({
+          ...requestInit,
+          method: 'DELETE',
+        });
+        expect(error.message).toStrictEqual(failedPayload.message);
+        done();
+      }
+    });
+    test('failed call - 404', async (done)=>{
+      try {
+        // @ts-ignore
+        fetch.mockResponseOnce(JSON.stringify(failedPayload), {status: 404});
+        await api.deleteJob(1);
+        done.fail();
+      } catch(error) {
+        // @ts-ignore
+        expect(fetch.mock.calls.length).toEqual(1);
+        // @ts-ignore
+        expect(fetch.mock.calls[0][0]).toEqual('http://localhost/api/jobs/1');
+        // @ts-ignore
+        expect(fetch.mock.calls[0][1]).toStrictEqual({
+          ...requestInit,
+          method: 'DELETE',
+        });
+        expect(error.message).toStrictEqual(failedPayload.message);
+        done();
+      }
+    });
+  });
   describe('createJob', () => {
     const newJob:Job = {
       title: `Developer role 1`,
