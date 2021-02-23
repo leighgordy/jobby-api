@@ -1,7 +1,14 @@
-require('jest-fetch-mock').enableMocks();
-const JobbyApi = require('../src/index');
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-ignore
+import { enableFetchMocks } from 'jest-fetch-mock';
+import JobbyApi from '../src/index';
+import Job from '../src/Job';
+import Message from '../src/Message';
 const base_url = 'http://localhost/api';
 require("regenerator-runtime/runtime");
+
+enableFetchMocks()
+
 const generateJob = (id:number):Job => ({
   id: id,
   title: `Developer role ${id}`,
@@ -72,17 +79,16 @@ describe('index.test.ts', () => {
   describe('getJob', () => {
     test('successful call', async ()=>{
       const successPayload = generateJob(1);
-
       // @ts-ignore
       fetch.mockResponseOnce(JSON.stringify(successPayload));
-      const jobs:Array<Job> = await api.getJob(1);
+      const job:Job = await api.getJob(1);
       // @ts-ignore
       expect(fetch.mock.calls.length).toEqual(1);
       // @ts-ignore
       expect(fetch.mock.calls[0][0]).toEqual('http://localhost/api/jobs/1');
       // @ts-ignore
       expect(fetch.mock.calls[0][1]).toStrictEqual(requestInit);
-      expect(jobs).toStrictEqual(successPayload);
+      expect(job).toStrictEqual(successPayload);
     });
     test('failed call - 500', async (done)=>{
       try {
@@ -129,7 +135,7 @@ describe('index.test.ts', () => {
       const successPayload = generateJob(1);
       // @ts-ignore
       fetch.mockResponseOnce(JSON.stringify(successPayload));
-      const jobs:Array<Job> = await api.createJob(newJob);
+      const job:Job = await api.createJob(newJob);
       // @ts-ignore
       expect(fetch.mock.calls.length).toEqual(1);
       // @ts-ignore
@@ -141,7 +147,7 @@ describe('index.test.ts', () => {
         body: JSON.stringify(newJob),
       });
 
-      expect(jobs).toStrictEqual(successPayload);
+      expect(job).toStrictEqual(successPayload);
     });
     test('failed call - 500', async (done)=>{
       try {
@@ -175,7 +181,7 @@ describe('index.test.ts', () => {
       const successPayload = generateJob(1);
       // @ts-ignore
       fetch.mockResponseOnce(JSON.stringify(successPayload));
-      const jobs:Array<Job> = await api.updateJob(1,existingJob);
+      const job:Job = await api.updateJob(1,existingJob);
       // @ts-ignore
       expect(fetch.mock.calls.length).toEqual(1);
       // @ts-ignore
@@ -186,7 +192,7 @@ describe('index.test.ts', () => {
         method: 'PUT',
         body: JSON.stringify(existingJob),
       });
-      expect(jobs).toStrictEqual(successPayload);
+      expect(job).toStrictEqual(successPayload);
     });
     test('failed call - 500', async (done)=>{
       try {

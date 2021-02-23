@@ -1,21 +1,21 @@
-const Job = require('./Job');
-const Message = require('./Message');
+import Job from './Job';
+import Message from './Message';
 
 interface JobbyApiInterface {
-  getJobs(): Promise<Object>;
-  getJob(id:number): Promise<Object>;
-  deleteJob(id:number): Promise<Object>;
-  createJob(job:Job): Promise<Object>;
-  updateJob(id:number, job:Job): Promise<Object>;
+  getJobs(): Promise<Array<Job>>;
+  getJob(id:number): Promise<Job>;
+  deleteJob(id:number): Promise<Message>;
+  createJob(job:Job): Promise<Job>;
+  updateJob(id:number, job:Job): Promise<Job>;
 }
 
-module.exports = class implements JobbyApiInterface {
+export default class implements JobbyApiInterface {
   #url:string;
   constructor(url:string) {
     this.#url = url;
   }
 
-  private basicFetch (endPoint: string, method: string, body?: object) {
+  private basicFetch (endPoint: string, method: string, body?: Job) {
     const bodyPayload = body == null ? null : { body: JSON.stringify(body) };
     return fetch(
       `${this.#url}/${endPoint}`,
