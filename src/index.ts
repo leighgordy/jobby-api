@@ -11,7 +11,6 @@ interface JobbyApiInterface {
 
 module.exports = class implements JobbyApiInterface {
   #url:string;
-
   constructor(url:string) {
     this.#url = url;
   }
@@ -30,7 +29,12 @@ module.exports = class implements JobbyApiInterface {
         referrerPolicy: 'no-referrer',
         ...bodyPayload,
       }).then((response)=>{
-      return response.json();
+        if (!response.ok) {
+          return response.json().then((response:Message) => {
+            throw Error(response.message);
+          });
+        }
+        return response.json();
     });
   }
 
