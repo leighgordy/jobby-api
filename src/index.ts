@@ -10,15 +10,15 @@ interface JobbyApiInterface {
 }
 
 export default class implements JobbyApiInterface {
-  #url:string;
+   private url:string;
   constructor(url:string) {
-    this.#url = url;
+    this.url = url;
   }
 
   private basicFetch (endPoint: string, method: string, body?: Job) {
     const bodyPayload = body == null ? null : { body: JSON.stringify(body) };
     return fetch(
-      `${this.#url}/${endPoint}`,
+      `${this.url}/${endPoint}`,
       {
         method,
         headers:{

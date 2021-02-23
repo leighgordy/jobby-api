@@ -9,7 +9,7 @@ require("regenerator-runtime/runtime");
 
 enableFetchMocks()
 
-const generateJob = (id:number):Job => ({
+const generateJob = (id: number):Job => ({
   id: id,
   title: `Developer role ${id}`,
   description: `Description ${id}`,
