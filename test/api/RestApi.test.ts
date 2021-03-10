@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
 import { enableFetchMocks } from 'jest-fetch-mock';
-import JobbyApi from '../src/index';
-import Job from '../src/Job';
-import Message from '../src/Message';
+import JobbyApi from '../../src/api/RestApi';
+import Job from '../../src/api/responses/Job';
+import Message from '../../src/api/responses/Message';
 const base_url = 'http://localhost/api';
 require("regenerator-runtime/runtime");
 
