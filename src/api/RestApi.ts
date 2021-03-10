@@ -1,53 +1,31 @@
 import Job from './responses/Job';
 import Message from './responses/Message';
 import ApiInterface from './ApiInterface';
+import BasicFetch from './BasicFetch';
 
 export default class implements ApiInterface {
-   private url:string;
+  private readonly basicFetch: BasicFetch;
   constructor(url:string) {
-    this.url = url;
-  }
-
-  private basicFetch (endPoint: string, method: string, body?: Job) {
-    const bodyPayload = body == null ? null : { body: JSON.stringify(body) };
-    return fetch(
-      `${this.url}/${endPoint}`,
-      {
-        method,
-        headers:{
-          'Content-Type': 'application/json'
-        },
-        cache: 'no-cache',
-        redirect: 'manual',
-        referrerPolicy: 'no-referrer',
-        ...bodyPayload,
-      }).then((response)=>{
-        if (!response.ok) {
-          return response.json().then((response:Message) => {
-            throw Error(response.message);
-          });
-        }
-        return response.json();
-    });
+    this.basicFetch = new BasicFetch(url);
   }
 
   public getJobs(): Promise<Array<Job>> {
-    return this.basicFetch('jobs','GET').then((jobPayload) => <Array<Job>> jobPayload);
+    return this.basicFetch.fetch<Array<Job>>('jobs','GET');
   }
 
   public getJob(id:number): Promise<Job> {
-    return this.basicFetch(`jobs/${id}`,'GET').then((jobPayload) => <Job> jobPayload);
+    return this.basicFetch.fetch<Job>(`jobs/${id}`,'GET');
   }
 
   public deleteJob(id:number): Promise<Message> {
-    return this.basicFetch(`jobs/${id}`,'DELETE');
+    return this.basicFetch.fetch<Message>(`jobs/${id}`,'DELETE');
   }
 
   public createJob(job:Job): Promise<Job> {
-    return this.basicFetch(`jobs`,'POST', job).then((jobPayload) => <Job> jobPayload);
+    return this.basicFetch.fetch<Job>(`jobs`,'POST', job);
   }
 
   public updateJob(id:number, job:Job): Promise<Job> {
-    return this.basicFetch(`jobs/${id}`,'PUT', job).then((jobPayload) => <Job> jobPayload);
+    return this.basicFetch.fetch<Job>(`jobs/${id}`,'PUT', job);
   }
 }

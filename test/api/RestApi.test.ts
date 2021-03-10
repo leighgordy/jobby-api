@@ -1,21 +1,15 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
 import { enableFetchMocks } from 'jest-fetch-mock';
+import 'regenerator-runtime/runtime';
 import JobbyApi from '../../src/api/RestApi';
 import Job from '../../src/api/responses/Job';
 import Message from '../../src/api/responses/Message';
+// @ts-ignore
+import generateJob from './helpers/generateJob';
+
 const base_url = 'http://localhost/api';
-require("regenerator-runtime/runtime");
-
 enableFetchMocks()
-
-const generateJob = (id: number):Job => ({
-  id: id,
-  title: `Developer role ${id}`,
-  description: `Description ${id}`,
-  email: `developer${id}@developer.com`,
-  created: 1613938304013 + id,
-});
 
 const requestInit = {
   "cache": "no-cache",
