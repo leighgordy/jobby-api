@@ -15,7 +15,8 @@
     "declaration": true,
     "outDir": "lib",
     "rootDir": "src",
-    "strict": true
+    "strict": true,
+    "noImplicitAny": false
   },
   "exclude": [
     "lib",
