@@ -77,5 +77,13 @@ describe('LocalApi.test.ts', () => {
       expect(updatedJob.id).toBe(123);
       expect(updatedJob.created).not.toBeUndefined();
     });
+    test('failed call', async () => {
+      const updatedJob = await api.updateJob(999, {
+        "description": "This is a fake job",
+        "email": "jobsa@jobs.com",
+        "title": "job A"
+      });
+      expect(updatedJob).toBeNull();
+    });
   });
 });
